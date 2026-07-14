@@ -1,0 +1,42 @@
+[package]
+name = "aros-core"
+version = "0.1.0"
+edition = "2021"
+description = "Cross-platform AR glasses engine — ASR, translation, AI suggestions, memory"
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib"]
+name = "aros_core"
+
+[dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "net", "time", "sync", "macros"] }
+tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"] }
+# Force ring crypto provider — aws-lc-rs hangs intermittently on aarch64-android
+reqwest = { version = "0.12", default-features = false, features = [
+    "stream", "json", "rustls-tls-manual-roots"
+] }
+rustls = { version = "0.23", default-features = false, features = [
+    "ring", "std", "tls12", "logging"
+] }
+webpki-roots = "0.26"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+log = "0.4"
+thiserror = "2"
+futures-util = "0.3"
+regex-lite = "0.1"
+uniffi = { version = "0.29", features = ["cli"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_logger = "0.14"
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+
+[build-dependencies]
+uniffi = { version = "0.29", features = ["build"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["test-util"] }
