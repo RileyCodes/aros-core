@@ -1,6 +1,11 @@
 # aros-core
 
+> 🕶️ Your glasses, with an agent inside.
+
 The Rust engine behind **ArOS** — a voice-agent layer for AR smart glasses (INMO Air3, Even Realities G2).
+
+<p align="center"><img src="docs/demo.gif" width="720" alt="On-lens HUD: streaming Japanese ASR, live Chinese translation, LLM reply suggestion"></p>
+<p align="center"><sub>Simulated preview of the on-lens HUD — streaming ASR → live ja⇄zh translation → LLM reply suggestion (Even G2 renders green monochrome). Real-device footage coming.</sub></p>
 
 One portable core, multiple frontends: `aros-core` compiles to a `cdylib` and is exposed to Kotlin on Android through [UniFFI](https://mozilla.github.io/uniffi-rs/). All core logic runs and is tested on the host — no device, no emulator, no JNI in the test loop (**84 host-side tests**).
 
